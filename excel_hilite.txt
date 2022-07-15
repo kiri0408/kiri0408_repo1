@@ -1,0 +1,7 @@
+=CELL("ROW")=ROW()
+
+Private Sub Workbook_SheetSelectionChange(ByVal Sh As Object, ByVal Target As Range)
+    Application.ScreenUpdating = True
+End Sub
+
+
