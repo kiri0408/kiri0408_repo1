@@ -1,0 +1,12 @@
+@echo off
+rem setlocal
+
+cd "%~dp0"
+cd test
+start a.bat
+
+pause
+
+rem ショートカットの場合
+rem %windir%\System32\rundll32.exe url.dll,FileProtocolHandler "test\a.bat"
+
