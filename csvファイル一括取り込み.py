@@ -1,10 +1,10 @@
-import os
-import datetime
+# import os
+# import datetime
 import glob
-import shutil
+#import shutil
 import pandas as pd
 from pathlib import Path
-import pathlib
+#import pathlib
 
 dir_taisho_oya = Path(r"C:\py\55_csvファイル一括取り込み\fol" )  #コピー元の親のフォルダパス
 
@@ -34,7 +34,7 @@ for dir in dir_taisho:
         #     continue
 
         # "1"を含むファイルが対象
-        p_file = pathlib.Path(file)  
+        p_file = Path(file)  
         if  "1" not in p_file.name :
             continue
 
