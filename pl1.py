@@ -8,7 +8,7 @@ import polars as pl
 # 現在在庫数を起点に、各月末の在庫数を計算
 
 
-df = pl.read_excel('RIB1.xlsx',sheet_name='Sheet3')
+df = pl.read_excel('r.xlsx',sheet_name='Sheet3')
 print(df)
 
 df = df.group_by(['品目コード','年月']).sum().sort(['品目コード','年月'])
@@ -20,7 +20,7 @@ print(df)
 df.write_excel('a.xlsx')
 
 
-df_pl = pl.read_excel('RIB1.xlsx',sheet_name='Sheet3')
+df_pl = pl.read_excel('r.xlsx',sheet_name='Sheet3')
 numpy_array = df_pl.to_numpy()
 _tuple = tuple([tuple(e) for e in numpy_array])
 print(_tuple)
@@ -32,7 +32,7 @@ try:
     #xl = GetObject(None, "Excel.Application")
     xl = win32com.client.Dispatch("Excel.Application")
     from pathlib import Path
-    abspath = str(Path(r"C:\py\65_rib1在庫\b.xlsx").resolve())
+    abspath = str(Path(r"C:\py\65_r在庫\b.xlsx").resolve())
     wb = xl.Workbooks.Open(abspath, UpdateLinks=0, ReadOnly=False)  # 読み取り専用の場合は  ReadOnly=True
     ws = wb.Sheets("ws")
     xl.DisplayAlerts = False # 警告を非表示
