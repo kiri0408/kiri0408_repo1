@@ -15,6 +15,6 @@ result = chat( #← 実行する
 )
 print(result.content)
 
-#PFClfzQznUDs1DybavgdN2unJT3BlbkFJIcUkpuMaQZYg9py
+
 
 
