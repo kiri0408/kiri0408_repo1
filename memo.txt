@@ -1,0 +1,5 @@
+
+#vscodeのjupiter notebookで仮想環境を認識する方法：
+#仮想環境activateし以下を実行。
+ipython kernel install --user --name=xxxxxxxx --display-name=xxxxxxxx
+
