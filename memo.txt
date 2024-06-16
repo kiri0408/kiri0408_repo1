@@ -3,3 +3,10 @@
 #仮想環境activateし以下を実行。
 ipython kernel install --user --name=xxxxxxxx --display-name=xxxxxxxx
 
+・CADデータを公開 
+・生産状況、出荷状況を公開
+・製品選びをAIチャットボットでサポート、レコメンド
+・製品のログをダウンロードできるようにする。
+・故障予測の連絡
+
+
