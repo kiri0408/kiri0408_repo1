@@ -6,3 +6,8 @@
 #
 # Tomcatサービス登録
 # C:\tomcat\bin\service.bat install Tomcat9
+
+import os
+home_path = os.path.expandvars('%HOMEPATH%')
+file_path =  r'C:' + home_path + r'\Desktop\ツール\a.txt'
+
