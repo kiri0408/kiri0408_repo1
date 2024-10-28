@@ -1,5 +1,14 @@
 import random
 
+filename="1028a"
+
+# 使用例
+input_file    = filename +".txt"  # 読み込むテキストファイル
+shuffled_file = filename +"_s.txt"  # シャッフルされたテキストを保存するファイル
+index_file    = filename +"_i.txt"  # インデックスを保存するファイル
+restored_file = filename +"_fukugen.txt"  # 復元されたテキストを保存するファイル
+
+
 # 1. テキストファイルを読み込み、シャッフルして新たなファイルに保存
 def shuffle_text(input_file, shuffled_file, index_file):
     # テキストファイルの読み込み
@@ -48,14 +57,9 @@ def restore_text(shuffled_file, index_file, restored_file):
 
     print(f"元のテキストが '{restored_file}' に復元されました。")
 
-# 使用例
-input_file = "tanazan.txt"  # 読み込むテキストファイル
-shuffled_file = "sf1t.txt"  # シャッフルされたテキストを保存するファイル
-index_file = "sf1i.txt"  # インデックスを保存するファイル
-restored_file = "restored_text.txt"  # 復元されたテキストを保存するファイル
 
 # 文字列のシャッフルと保存
-# shuffle_text(input_file, shuffled_file, index_file)
+shuffle_text(input_file, shuffled_file, index_file)
 
 # シャッフルを元に戻してテキストを復元
 restore_text(shuffled_file, index_file, restored_file)
