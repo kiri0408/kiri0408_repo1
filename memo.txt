@@ -7,3 +7,8 @@ https://zenn.dev/hrk_mrks/articles/ad6b0e66b0cab6
 
 https://364727579733.signin.aws.amazon.com/console
 
+・なぜAWS？ Azureではなく
+・bcampでやってみる？ 無料で試せる。  
+・認証はAD Connector？
+・HTTPS 証明書はどうしている？
+・IP制限はWAF？
