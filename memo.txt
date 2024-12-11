@@ -1,16 +1,4 @@
-各システムのユーザ情報の維持管理について誰が責任をもつのか？
-各システムの事情（適正な利用部門、想定する利用数、その他の運用ルール）を知らない人がユーザ情報の維持管理の責任をもつ？
-
-https://qiita.com/TaishiOikawa/items/d6319d767ef920810056
-
-https://zenn.dev/hrk_mrks/articles/ad6b0e66b0cab6
-
-https://364727579733.signin.aws.amazon.com/console
-
-・なぜAWS？ Azureではなく
-・bcampでやってみる？ 無料で試せる。  
-・認証はAD Connector？
-・HTTPS 証明書はどうしている？
-・IP制限はWAF？
 
 https://github.com/GenerativeAgents/agent-book/tree/main
+リリース予定を連絡
+
