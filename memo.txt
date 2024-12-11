@@ -12,3 +12,5 @@ https://364727579733.signin.aws.amazon.com/console
 ・認証はAD Connector？
 ・HTTPS 証明書はどうしている？
 ・IP制限はWAF？
+
+https://github.com/GenerativeAgents/agent-book/tree/main
