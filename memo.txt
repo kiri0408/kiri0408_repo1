@@ -2,3 +2,7 @@
 https://github.com/GenerativeAgents/agent-book/tree/main
 リリース予定を連絡
 
+資料Aのテキストを元に、資料Bから類似度の高いテキストをもってくる。
+
+資料A 神奈川７－８０
+資料B 国交省１－９９
