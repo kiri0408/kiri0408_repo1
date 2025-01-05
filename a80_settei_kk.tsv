@@ -1,0 +1,14 @@
+key	value
+"file_pdf"	"./doc_raw/kk.pdf"
+"page_sta"	2
+"page_end"	999
+"midashi1"	"^第\s*[０-９\d]+\s*編\s.+$"
+"midashi2"	"^第\s*[０-９\d]+\s*章\s.+$"
+"midashi3"	"^第\s*[０-９\d]+\s*節\s.+$"
+"midashi4"	"^[０-９\d]+\.[０-９\d]+\.[０-９\d]+\s.+$"
+"kajo1"	"^\([０-９\d]+\)"
+"kajo2"	"^\([ｱ-ﾝ]\)"
+"kajo3"	"^\([a-z]\)"
+"HeaderFooter1"	"^\s*公共建築工事標準仕様書（電気設備工事編）令和４年版\s*$"
+"HeaderFooter2"	"^\s*\d+\s+国土交通省大臣官房官庁営繕部\s*$"
+"HeaderFooter3"	"xxxxxxxxxxxxx"

@@ -1,0 +1,14 @@
+key	value
+"file_pdf"	"./doc_raw/kana.pdf"
+"page_sta"	7
+"page_end"	999
+"midashi1"	"^第[０-９\d]+\s*章\s.+$"
+"midashi2"	"^第[０-９\d]+\s*節\s.+$"
+"midashi3"	"^[０-９\d]+－[０-９\d]+－[０-９\d]+\s.+$"
+"midashi4"	"xxxxxxx"
+"kajo1"	"^\d+\s*"
+"kajo2"	"^[ｱ-ﾜ]\s*"
+"kajo3"	"^[a-z]\s*"
+"HeaderFooter1"	"^\d+\s*－\s*\d+\s*$"
+"HeaderFooter2"	"xxxxxxx"
+"HeaderFooter3"	"xxxxxxx"
