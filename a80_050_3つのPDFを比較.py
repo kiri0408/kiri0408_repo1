@@ -9,12 +9,13 @@ from langchain_openai import AzureOpenAIEmbeddings
 import win32com.client
 import tkinter as tk
 from tkinter import filedialog
+import os 
 
 class Hikaku_jikko:
     def __init__(self, llm: AzureOpenAIEmbeddings):
         self.llm = llm
 
-    def run(self, persist_directorys   , df_questions ):
+    def run(self, persist_directorys , columns , df_questions ):
 
         count = 0
         for persist_directory in persist_directorys : # データベースの保存先ディレクトリ
@@ -66,9 +67,9 @@ class Hikaku_jikko:
         #print(df_matome)
         df_matome.write_csv('df_matome.tsv',separator='\t')
 
-        filename ='質問事項.xlsx'
+        filename =selected_file
         sheetname ='検索結果' 
-        tuple=('番号','チェック事項','枝番','本文1','項番1','誤差1','本文2','項番2','誤差2','本文3','項番3','誤差3') 
+        tuple=('番号','チェック事項','枝番',columns[0],'項番1','誤差1',columns[1],'項番2','誤差2',columns[2],'項番3','誤差3') 
         excel_out_col(filename=filename, sheetname=sheetname, _tuple=tuple, startRow=1, startCol=1)  
         excel_out_data(filename=filename, sheetname=sheetname, _tuple=df_matome.rows(), startRow=2, startCol=1)    # df.rows() はタプル変換 
 
@@ -82,10 +83,14 @@ class Hikaku_jikko:
 def excel_out_col(filename, sheetname, _tuple, startRow, startCol):
    
     excel = win32com.client.GetObject(Class="Excel.Application")  # 開いているExcelアプリケーションへの参照を取得
+    target_wb=''
     for wb in excel.Workbooks:   # 開いているワークブックの中から対象ブックを探す
-        if wb.Name == filename:
+        print(wb.Name)
+        if wb.Name ==  os.path.basename(filename) :
             target_wb = wb
             break
+    if target_wb=='' :
+        print('ファイルが見つかりません', filename) 
 
     ws = target_wb.Worksheets(sheetname)                     #シートを取得
     ws.Range(ws.Cells(startRow,startCol),ws.Cells(startRow, startCol+len(_tuple)-1)).ClearContents()  #シートをクリア （１行目のカラムの部分）
@@ -96,7 +101,7 @@ def excel_out_data(filename, sheetname, _tuple, startRow, startCol):
 
     excel = win32com.client.GetObject(Class="Excel.Application") # 開いているExcelアプリケーションへの参照を取得
     for wb in excel.Workbooks:  # 開いているワークブックの中から対象ブックを探す
-        if wb.Name == filename:
+        if wb.Name == os.path.basename(filename) :
             target_wb = wb
             break
 
@@ -113,31 +118,11 @@ def select_file():
         global selected_file
         selected_file = filename
 
-
-######################### 単独実行用main #############################
-if __name__ == "__main__":
-
-    # 設定ファイルからデータを読み込む
-    import json
-    with open('a80.json', 'r', encoding='utf-8') as file:
-        dict_ = json.load(file)
-    deployment_name=dict_['deployment_name']
-    azure_endpoint=dict_['azure_endpoint']
-    openai_api_key=dict_['openai_api_key']
-    openai_api_version=dict_['openai_api_version']
-    emb_azure_deployment=dict_['emb_azure_deployment']
-    emb_azure_endpoint=dict_['emb_azure_endpoint']
-    emb_openai_api_key=dict_['emb_openai_api_key']
-    emb_openai_api_version=dict_['emb_openai_api_version']
-    embeddings = AzureOpenAIEmbeddings(azure_deployment=emb_azure_deployment, 
-                                       openai_api_version=emb_openai_api_version, 
-                                       openai_api_key=emb_openai_api_key, 
-                                       azure_endpoint=emb_azure_endpoint ) 
-
+def main():
 
     #persist_directorys =[ r"./kana_20250104_154214_2_faiss_db"   , r"./kk_20250105_101542_2_faiss_db" ,  r"./kk_kai_20250104_193658_2_faiss_db"]  # データベースの保存先ディレクトリ  
 
-    question_file = '質問事項.xlsx'
+    question_file = selected_file
 
     # 質問事項を読み込む
     df_questions = pl.read_excel(question_file,sheet_name='チェック事項')
@@ -160,7 +145,30 @@ if __name__ == "__main__":
     pass
 
     hikaku_ = Hikaku_jikko(llm=embeddings)
-    #file_hikaku  = hikaku_.run(persist_directorys = siyosho_codes , df_questions = df_questions) # 一時フォルダのパスを指定 
+    file_hikaku  = hikaku_.run(persist_directorys = siyosho_codes[:3] , df_questions = df_questions , columns=siyosho_names[:3]) # 一時フォルダのパスを指定 
+
+######################### 単独実行用main #############################
+if __name__ == "__main__":
+
+    # 設定ファイルからデータを読み込む
+    import json
+    with open('a80.json', 'r', encoding='utf-8') as file:
+        dict_ = json.load(file)
+    deployment_name=dict_['deployment_name']
+    azure_endpoint=dict_['azure_endpoint']
+    openai_api_key=dict_['openai_api_key']
+    openai_api_version=dict_['openai_api_version']
+    emb_azure_deployment=dict_['emb_azure_deployment']
+    emb_azure_endpoint=dict_['emb_azure_endpoint']
+    emb_openai_api_key=dict_['emb_openai_api_key']
+    emb_openai_api_version=dict_['emb_openai_api_version']
+    embeddings = AzureOpenAIEmbeddings(azure_deployment=emb_azure_deployment, 
+                                       openai_api_version=emb_openai_api_version, 
+                                       openai_api_key=emb_openai_api_key, 
+                                       azure_endpoint=emb_azure_endpoint ) 
+
+
+
 
     # メインウィンドウの作成
     root = tk.Tk()
@@ -177,7 +185,7 @@ if __name__ == "__main__":
     file_label.pack(pady=5)
 
     # 実行ボタン
-    execute_button = tk.Button(root, text="   検索実行   ", command=lambda:hikaku_.run(persist_directorys = siyosho_codes , df_questions = df_questions))
+    execute_button = tk.Button(root, text="   検索実行   ", command=lambda:main())
     execute_button.pack(pady=10)
 
     # 実行結果を表示するラベル
