@@ -130,6 +130,9 @@ class Chunk_bunkatu:
             else : 
                 content = content + line +'\n' 
 
+        str_all.append([i,komoku1,komoku2,komoku3,komoku4,content])  #ver1.1  
+
+
         # 見出しでチャンク分割したリストをpolarsのDataFrameに変換
         df_all = pl.DataFrame(str_all, strict=False).transpose()
         df_all = df_all.select(
@@ -139,6 +142,7 @@ class Chunk_bunkatu:
             pl.col('column_4').alias('midashi4'),
             pl.col('column_5').alias('content'),
         )
+        print(df_all)
 
         # インデックスを作成する （見出しチャンクが大きいときに、箇条書きで分割するためのインデックス）
         df_all = df_all.with_columns(pl.lit(0.0).alias('index') , pl.lit('').alias('delete'))
@@ -146,6 +150,8 @@ class Chunk_bunkatu:
             df_all[i,'index'] = i 
 
         for i in range(len(df_all)):
+            if i==len(df_all)-10:
+                pass
             if len(df_all[i,'content']) > 500:      #見出しチャンクが大きい場合 
                 df_all[i,'delete'] = 'del'          #そのチャンクには削除フラグを立てる
                 list_bunkatu = self.bunkatu(df_all[i,'content']) #箇条書きで分割する
@@ -182,7 +188,7 @@ class Chunk_bunkatu:
 
         df_all = df_all.filter(pl.col('delete') != 'del')  #削除フラグが立っているものを削除
         df_all = df_all.sort(pl.col('index'))              #インデックスでソート
-        df_all.write_csv(self.folder_temp + r'/df_all.tsv',separator='\t')
+        df_all.write_csv(self.folder_temp + r'./df_all.tsv',separator='\t')
 
         print('df_all.tsvを作成しました。')
 
@@ -191,17 +197,41 @@ class Chunk_bunkatu:
 ######################### 単独実行用main #############################
 if __name__ == "__main__":
 
-    with open(r'./kana_20250103_225449/combined_text.txt', 'r', encoding='utf-8') as f:
+    #kana
+    with open(r'./kana_20250104_154214/combined_text.txt', 'r', encoding='utf-8') as f:
         combined_text = f.read()
-    
-    folder_temp ="kana_20250103_225449"
+    folder_temp ="kana_20250104_154214"
     midashi1 ="^第[０-９\d]+\s*章\s.+$"
     midashi2 ="^第[０-９\d]+\s*節\s.+$"
     midashi3 ="^[０-９\d]+－[０-９\d]+－[０-９\d]+\s.+$"
-    midashi4 ="^[０-９\d]+－[０-９\d]+\s.+$"
+    midashi4 ="xxxxxxxxxxxxxxxxx"  
     kajo1    ="^\d+"
     kajo2    ="^[ｱ-ﾜ]"
     kajo3    ="^[a-z]"
+
+    #kk
+    with open(r'./kk_20250105_101542/combined_text.txt', 'r', encoding='utf-8') as f:
+        combined_text = f.read()
+    folder_temp ="kk_20250105_101542"
+    midashi1=	"^第\s*[０-９\d]+\s*編\s.+$"
+    midashi2=	"^第\s*[０-９\d]+\s*章\s.+$"
+    midashi3=	"^第\s*[０-９\d]+\s*節\s.+$"
+    midashi4=	"^[０-９\d]+\.[０-９\d]+\.[０-９\d]+\s.+$"
+    kajo1=	"^\([０-９\d]+\)"
+    kajo2=	"^\([ｱ-ﾝ]\)"
+    kajo3=	"^\([a-z]\)"
+
+    #kk_kai
+    with open(r'./kk_kai_20250104_193658/combined_text.txt', 'r', encoding='utf-8') as f:
+        combined_text = f.read()
+    folder_temp ="kk_kai_20250104_193658"
+    midashi1=	"^第\s*[０-９\d]+\s*編\s.+$"
+    midashi2=	"^第\s*[０-９\d]+\s*章\s.+$"
+    midashi3=	"^第\s*[０-９\d]+\s*節\s.+$"
+    midashi4=	"^[０-９\d]+\.[０-９\d]+\.[０-９\d]+\s.+$"
+    kajo1=	"^\([０-９\d]+\)"
+    kajo2=	"^\([ｱ-ﾝ]\)"
+    kajo3=	"^\([a-z]\)"
 
     chunk_bunkatu_ = Chunk_bunkatu()
     df_all = chunk_bunkatu_.run(combined_text=combined_text  , folder_temp=folder_temp ,midashi1=midashi1, midashi2=midashi2, midashi3=midashi3, midashi4=midashi4, kajo1=kajo1, kajo2=kajo2, kajo3=kajo3)

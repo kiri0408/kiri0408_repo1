@@ -62,13 +62,21 @@ if __name__ == "__main__":
     emb_azure_endpoint=dict_['emb_azure_endpoint']
     emb_openai_api_key=dict_['emb_openai_api_key']
     emb_openai_api_version=dict_['emb_openai_api_version']
-
     embeddings = AzureOpenAIEmbeddings( azure_deployment=emb_azure_deployment, openai_api_version=emb_openai_api_version, openai_api_key=emb_openai_api_key, azure_endpoint=emb_azure_endpoint ) 
-    df_all = pl.read_csv(r'kana_20250103_231638/df_all.tsv',separator='\t',dtypes= [pl.Utf8, pl.Utf8, pl.Utf8, pl.Utf8, pl.Utf8, pl.Float64, pl.Utf8, pl.Utf8, pl.Utf8])
-
-    #llm = AzureChatOpenAI( deployment_name="gpt-4o-3", temperature=0 )
+    
     emb_ = Embedding_jikko(llm=embeddings)
-    folder_db  = emb_.run(folder_temp = r'./kana_20250103_183730' , df_all = df_all) # 一時フォルダのパスを指定 
+
+    #kana 
+    # df_all = pl.read_csv(r'./kana_20250104_154214/df_all.tsv',separator='\t',dtypes= [pl.Utf8, pl.Utf8, pl.Utf8, pl.Utf8, pl.Utf8, pl.Float64, pl.Utf8, pl.Utf8, pl.Utf8])
+    # folder_db  = emb_.run(folder_temp = r'./kana_20250104_154214_faiss_db_full2' , df_all = df_all) # 一時フォルダのパスを指定 
+
+    #kk
+    # df_all = pl.read_csv(r'./kk_20250105_101542/df_all.tsv',separator='\t',dtypes= [pl.Utf8, pl.Utf8, pl.Utf8, pl.Utf8, pl.Utf8, pl.Float64, pl.Utf8, pl.Utf8, pl.Utf8])
+    # folder_db  = emb_.run(folder_temp = r'./kk_20250105_101542_2' , df_all = df_all) # 一時フォルダのパスを指定 
+
+    #kk_kai
+    df_all = pl.read_csv(r'./kk_kai_20250104_193658/df_all.tsv',separator='\t',dtypes= [pl.Utf8, pl.Utf8, pl.Utf8, pl.Utf8, pl.Utf8, pl.Float64, pl.Utf8, pl.Utf8, pl.Utf8])
+    folder_db  = emb_.run(folder_temp = r'./kk_kai_20250104_193658_2' , df_all = df_all) # 一時フォルダのパスを指定 
 
     print(folder_db)
     print('end! ')
